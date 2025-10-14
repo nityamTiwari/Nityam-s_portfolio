@@ -502,7 +502,7 @@
                                 </div>
                                 <div class="method-details">
                                     <h4>Phone</h4>
-                                    <a href="tel:+919876543210">+91 9458787485</a>
+                                    <a href="tel:+919458787485">+91 9458787485</a>
                                 </div>
                             </div>
                             <div class="contact-method">
@@ -563,10 +563,13 @@
                                 <label for="message">Your Message</label>
                                 <i class="fas fa-comment-dots form-icon"></i>
                             </div>
-                            <button type="submit" class="cta-button primary-btn submit-btn">
-                                <span>Send Message</span>
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
+                                <!-- Status message (shown by JS) -->
+                                <div id="formStatus" class="form-status" style="display:none"></div>
+
+                                <button type="submit" id="submitBtn" class="cta-button primary-btn submit-btn">
+                                    <span>Send Message</span>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
                         </form>
                     </div>
                 </div>
