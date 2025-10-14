@@ -377,34 +377,56 @@ gsap.from('.form-group', {
 // ============================================
 // Contact Form Submission
 // ============================================
-const contactForm = document.getElementById('contactForm');
-
-contactForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const button = contactForm.querySelector('.submit-btn');
-    const originalText = button.innerHTML;
-    
-    // Show loading state
-    button.innerHTML = '<span>Sending...</span><i class="fas fa-spinner fa-spin"></i>';
-    button.disabled = true;
-    
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-        button.innerHTML = '<span>Message Sent!</span><i class="fas fa-check"></i>';
-        button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-        
-        // Reset form
-        contactForm.reset();
-        
-        // Reset button after 3 seconds
-        setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.background = '';
-            button.disabled = false;
-        }, 3000);
-    }, 2000);
-});
+  
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const formStatus = document.getElementById('formStatus');
+            const form = e.target;
+            
+            // Get form data
+            const formData = new FormData(form);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            try {
+                // Create mailto link with form data
+                const mailtoLink = `mailto:nityamtiwari08@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+                
+                // Open default email client
+                window.location.href = mailtoLink;
+                
+                // Show success message
+                formStatus.className = 'form-status success';
+                formStatus.textContent = 'Email client opened! Please send the email from your default email application.';
+                formStatus.style.display = 'block';
+                
+                // Reset form
+                form.reset();
+                
+            } catch (error) {
+                // Show error message
+                formStatus.className = 'form-status error';
+                formStatus.textContent = 'Something went wrong. Please try again or contact me directly at vishal112006jain@gmail.com';
+                formStatus.style.display = 'block';
+            }
+            
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message';
+            
+            // Hide status message after 5 seconds
+            setTimeout(() => {
+                formStatus.style.display = 'none';
+            }, 5000);
+        });
 
 // ============================================
 // Back to Top Button
